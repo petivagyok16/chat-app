@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
+import { StoreModule } from '@ngrx/store';
 
 // Components
 import { AppComponent } from './app.component';
@@ -24,7 +25,8 @@ import { ThreadsService } from './services/threads.service';
   ],
   imports: [
     BrowserModule,
-    HttpModule
+    HttpModule,
+    StoreModule.forRoot({}),
   ],
   providers: [ThreadsService],
   bootstrap: [AppComponent]
