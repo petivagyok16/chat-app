@@ -1,7 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
-import { StoreModule } from '@ngrx/store';
+import { StoreModule, Action, ActionReducer } from '@ngrx/store';
+import { ApplicationState, INITIAL_APPLICATION_STATE } from './store/states/application-state';
 
 // Components
 import { AppComponent } from './app.component';
@@ -13,6 +14,9 @@ import { ThreadListComponent } from './components/thread-list/thread-list.compon
 
 // Services
 import { ThreadsService } from './services/threads.service';
+
+// Reducers
+import { reducers } from './store/reducers/reducers';
 
 @NgModule({
   declarations: [
@@ -26,7 +30,7 @@ import { ThreadsService } from './services/threads.service';
   imports: [
     BrowserModule,
     HttpModule,
-    StoreModule.forRoot({}),
+    StoreModule.forRoot(reducers, { initialState: INITIAL_APPLICATION_STATE }),
   ],
   providers: [ThreadsService],
   bootstrap: [AppComponent]
