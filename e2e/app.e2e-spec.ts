@@ -1,6 +1,6 @@
 import { AppPage } from './app.po';
 
-describe('ngrx-course App', () => {
+describe('chat-app App', () => {
   let page: AppPage;
 
   beforeEach(() => {
