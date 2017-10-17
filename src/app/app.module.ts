@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { HttpModule } from '@angular/http';
 
 // Components
 import { AppComponent } from './app.component';
@@ -22,7 +23,8 @@ import { ThreadsService } from './services/threads.service';
     ThreadListComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    HttpModule
   ],
   providers: [ThreadsService],
   bootstrap: [AppComponent]
