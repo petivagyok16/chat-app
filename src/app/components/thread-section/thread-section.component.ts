@@ -2,7 +2,7 @@ import { ThreadsService } from '../../services/threads.service';
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 
-import { ApplicationState } from '../../store/application-state';
+import { ApplicationState } from '../../store/states/application-state';
 import { LoadUserThreadsAction } from '../../store/actions';
 
 @Component({
