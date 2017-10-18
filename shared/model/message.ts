@@ -5,3 +5,10 @@ export interface Message {
   text: string;
   timestamp: number;
 }
+
+export interface MessageVM {
+  id: number;
+  text: string;
+  participantName: string;
+  timestamp: number;
+}
