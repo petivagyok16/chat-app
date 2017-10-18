@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
 import { StoreModule, Action, ActionReducer } from '@ngrx/store';
-import { ApplicationState, INITIAL_APPLICATION_STATE } from './store/states/application-state';
+import { INITIAL_APPLICATION_STATE } from './store/states/application-state';
 
 // Components
 import { AppComponent } from './app.component';
