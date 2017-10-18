@@ -8,7 +8,7 @@ export function uiStateReducer(uiState: UiState = INITIAL_UI_STATE, action: Acti
       return handleThreadSelectedAction(uiState, <ThreadSelectedAction>action);
 
     default:
-    return uiState;
+      return uiState;
   }
 }
 
