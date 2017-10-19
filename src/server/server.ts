@@ -1,3 +1,4 @@
+import { apiSaveNewMessage } from './api/saveNewMessage';
 
 
 import * as express from 'express';
@@ -11,6 +12,7 @@ app.use(bodyParser.json());
 
 
 apiGetUserThreads(app);
+apiSaveNewMessage(app);
 
 
 app.listen(8090, () => {
