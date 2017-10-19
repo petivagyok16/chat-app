@@ -6,7 +6,8 @@ export const ActionTypes = {
   USER_THREADS_LOADED_ACTION: type("[Threads] User threads loaded"),
   LOAD_USER_THREADS_ACTION: type("[Threads] Load user threads"),
   THREAD_SELECTED_ACTION: type("[Thread] A thread was selected."),
-  SELECT_USER_ACTION: type("[User] New user was selected.")
+  SELECT_USER_ACTION: type("[User] New user was selected."),
+  SEND_NEW_MESSAGE_ACTION: type("[Message] A new message was sent.")
 };
 
 export class LoadUserThreadsAction implements Action {
@@ -28,4 +29,9 @@ export class ThreadSelectedAction implements Action {
 export class SelectUserAction implements Action {
   readonly type: string = ActionTypes.SELECT_USER_ACTION;
   constructor(public payload: number) { }
+}
+
+export class SendNewMessageAction implements Action {
+  readonly type: string = ActionTypes.SEND_NEW_MESSAGE_ACTION;
+  constructor(public payload: { text: string, threadId: number, participantId: number }) {}
 }

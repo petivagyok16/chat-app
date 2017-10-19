@@ -7,6 +7,7 @@ import { ApplicationState } from '../../store/states/application-state';
 import { UiState } from '../../store/states/ui-state';
 import { buildThreadParticipantsList } from '../../shared/buildThreadParticipantsList';
 import { MessageVM } from '../../../../shared/model/message'
+import { SendNewMessageAction } from '../../store/actions';
 
 @Component({
   selector: 'app-message-section',
@@ -21,10 +22,18 @@ export class MessageSectionComponent {
   constructor(private store: Store<ApplicationState>) {
     this.participantNames$ = store.select(this.messageParticipantNamesSelector);
     this.messages$ = store.select(this.messagesSelector);
+    store.subscribe(state => {
+      this.uiState = Object.assign({}, state.uiState);
+    });
   }
 
   public onMessageEnter(input) {
-    
+    this.store.dispatch(new SendNewMessageAction({
+      text: input.value,
+      threadId: this.uiState.currentThreadId,
+      participantId: this.uiState.userId
+    }));
+    input.value = '';
   }
 
   private messageParticipantNamesSelector(state: ApplicationState): string {
@@ -36,6 +45,10 @@ export class MessageSectionComponent {
   
     const currentThread = state.storeDataState.threads[currentThreadId];
     return buildThreadParticipantsList(state, currentThread);
+  }
+
+  private currentThreadSelector(state: ApplicationState): number {
+    return state.uiState.currentThreadId;
   }
 
   private messagesSelector(state: ApplicationState): MessageVM[] {
