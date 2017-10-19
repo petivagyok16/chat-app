@@ -15,7 +15,7 @@ declare module 'rxjs/Observable' {
   }
 };
 
-const debuggerOn = true;
+const debuggerOn = !environment.production;
 
 Observable.prototype.debug = function(message: string) {
   return this.do(
