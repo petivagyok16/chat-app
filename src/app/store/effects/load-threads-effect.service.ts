@@ -12,14 +12,16 @@ export class LoadThreadsEffectService {
     private actions$: Actions
   ) { }
 
-  @Effect() userThreads$: Observable<Action> = this.actions$
-  .ofType(ActionTypes.LOAD_USER_THREADS_ACTION)
-  .debug(val => {console.log('Action received -> ', val)})
-  .switchMap((action: LoadUserThreadsAction) => this.threadsService.loadUserThreads(action.payload))
-  .debug(data => {console.log('data arrived-> ', data )})
-  .map(allUserData => new UserThreadsLoadedAction(allUserData));
+  @Effect()
+    userThreads$: Observable<Action> = this.actions$
+      .ofType(ActionTypes.LOAD_USER_THREADS_ACTION)
+      .debug(val => {console.log('Action received -> ', val)})
+      .switchMap((action: LoadUserThreadsAction) => this.threadsService.loadUserThreads(action.payload))
+      .debug(data => {console.log('data arrived-> ', data )})
+      .map(allUserData => new UserThreadsLoadedAction(allUserData));
 
-  @Effect() newUserSelected$: Observable<Action> = this.actions$
-  .ofType(ActionTypes.SELECT_USER_ACTION)
-  .map((action: SelectUserAction) => new LoadUserThreadsAction(action.payload))
+  @Effect()
+    newUserSelected$: Observable<Action> = this.actions$
+      .ofType(ActionTypes.SELECT_USER_ACTION)
+      .map((action: SelectUserAction) => new LoadUserThreadsAction(action.payload))
 }
