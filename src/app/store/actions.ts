@@ -7,7 +7,9 @@ export const ActionTypes = {
   LOAD_USER_THREADS_ACTION: type("[Threads] Load user threads"),
   THREAD_SELECTED_ACTION: type("[Thread] A thread was selected."),
   SELECT_USER_ACTION: type("[User] New user was selected."),
-  SEND_NEW_MESSAGE_ACTION: type("[Message] A new message was sent.")
+  SEND_NEW_MESSAGE_ACTION: type("[Message] A new message was sent."),
+  ERROR_OCCURED_ACTION: type('[Error] Error Occured'),
+  CLEAR_ERROR_ACTION: type('[ERROR] Error closed'),
 };
 
 export class LoadUserThreadsAction implements Action {
@@ -34,4 +36,14 @@ export class SelectUserAction implements Action {
 export class SendNewMessageAction implements Action {
   readonly type: string = ActionTypes.SEND_NEW_MESSAGE_ACTION;
   constructor(public payload: { text: string, threadId: number, participantId: number }) {}
+}
+
+export class ErrorOccuredAction implements Action {
+  readonly type: string = ActionTypes.ERROR_OCCURED_ACTION;
+  constructor(public payload: string) {}
+}
+
+export class ClearErrorAction implements Action {
+  readonly type: string = ActionTypes.CLEAR_ERROR_ACTION;
+  constructor() {}
 }

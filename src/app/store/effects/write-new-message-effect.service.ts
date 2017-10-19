@@ -5,14 +5,16 @@ import { ThreadsService } from '../../services/threads.service';
 import { Actions, Effect } from '@ngrx/effects';
 import { Action } from '@ngrx/store';
 import { SendNewMessageAction } from '../actions'
+import { ErrorOccuredAction } from './../actions';
 
 @Injectable()
 export class WriteNewMessageEffectService {
 
   constructor(private actions$: Actions, private threadsService: ThreadsService) { }
 
-  @Effect({ dispatch: false })
+  @Effect()
     newMessages$: Observable<any> = this.actions$
       .ofType(ActionTypes.SEND_NEW_MESSAGE_ACTION)
       .switchMap((action: SendNewMessageAction) => this.threadsService.saveNewMessage(action.payload))
+      .catch((error) => Observable.of(new ErrorOccuredAction('Error occured while sending the message')));
 }

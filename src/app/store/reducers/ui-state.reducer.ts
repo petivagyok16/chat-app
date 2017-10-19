@@ -1,6 +1,6 @@
 import { Action } from '@ngrx/store';
 import { INITIAL_UI_STATE, UiState } from '../states/ui-state';
-import { ActionTypes, SelectUserAction, ThreadSelectedAction } from '../actions';
+import { ActionTypes, SelectUserAction, ThreadSelectedAction, ErrorOccuredAction, ClearErrorAction } from '../actions';
 
 export function uiStateReducer(uiState: UiState = INITIAL_UI_STATE, action: Action): UiState {
   switch (action.type) {
@@ -9,6 +9,12 @@ export function uiStateReducer(uiState: UiState = INITIAL_UI_STATE, action: Acti
 
     case ActionTypes.SELECT_USER_ACTION:
       return handleSelectUserAction(uiState, <SelectUserAction>action);
+
+    case ActionTypes.ERROR_OCCURED_ACTION:
+      return handleErrorOccuredAction(uiState, <ErrorOccuredAction>action);
+
+    case ActionTypes.CLEAR_ERROR_ACTION:
+      return handleClearErrorAction(uiState, <ClearErrorAction>action);
 
     default:
       return uiState;
@@ -27,5 +33,20 @@ function handleSelectUserAction(uiState: UiState, action: SelectUserAction) {
     ...uiState,
     userId: action.payload,
     currentThreadId: undefined,
+  }
+}
+
+function handleErrorOccuredAction(uiState: UiState, action: ErrorOccuredAction) {
+  return {
+    ...uiState,
+    currentError: action.payload,
+  }
+}
+
+
+function handleClearErrorAction(uiState: UiState, action: ClearErrorAction) {
+  return {
+    ...uiState,
+    currentError: null,
   }
 }
