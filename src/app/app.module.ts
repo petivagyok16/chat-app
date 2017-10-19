@@ -24,6 +24,7 @@ import { reducers } from './store/reducers/reducers';
 // Effects
 import { LoadThreadsEffectService } from './store/effects/load-threads-effect.service';
 import { WriteNewMessageEffectService } from './store/effects/write-new-message-effect.service';
+import { MessagesComponent } from './components/messages/messages.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { WriteNewMessageEffectService } from './store/effects/write-new-message-
     ThreadSectionComponent,
     MessageSectionComponent,
     MessageListComponent,
-    ThreadListComponent
+    ThreadListComponent,
+    MessagesComponent
   ],
   imports: [
     BrowserModule,
