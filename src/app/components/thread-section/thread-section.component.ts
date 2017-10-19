@@ -1,11 +1,11 @@
-import { Thread } from '../../../../shared/model/thread';
-import { ThreadsService } from '../../services/threads.service';
-import { Component, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
+import { Component } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import { Store } from '@ngrx/store';
 import * as _ from 'lodash';
 
 import { ApplicationState } from '../../store/states/application-state';
+import { ThreadsService } from '../../services/threads.service';
+import { Thread } from '../../../../shared/model/thread';
 import { LoadUserThreadsAction, ThreadSelectedAction } from '../../store/actions';
 import { ThreadSummary } from './thread-summary.vm';
 
@@ -14,18 +14,20 @@ import { ThreadSummary } from './thread-summary.vm';
   templateUrl: './thread-section.component.html',
   styleUrls: ['./thread-section.component.css']
 })
-export class ThreadSectionComponent implements OnInit {
+export class ThreadSectionComponent {
   public userName$: Observable<string>;
   public unreadMessagesCounter$: Observable<number>;
   public threadSummaries$: Observable<ThreadSummary[]>;
+  public currentSelectedThreadId$: Observable<number>;
 
   constructor(
     private store: Store<ApplicationState>
   ) {
     this.store.subscribe(console.log);
     this.userName$ = this.store.select(this.userNameSelector);
-    this.unreadMessagesCounter$ = this.store.map(this.mapStateToUnreadMessagesCounter);
+    this.unreadMessagesCounter$ = this.store.select(this.mapStateToUnreadMessagesCounter);
     this.threadSummaries$ = store.select(this.mapStateToThreadSummaries);
+    this.currentSelectedThreadId$ = store.select(state => state.uiState.currentThreadId);
   }
 
   private mapStateToThreadSummaries(state: ApplicationState): ThreadSummary[] {
@@ -58,10 +60,6 @@ export class ThreadSectionComponent implements OnInit {
     const currentUserId = state.uiState.userId;
     return _.values<Thread>(state.storeDataState.threads)
       .reduce((acc, thread) => acc + (thread.participants[currentUserId] || 0), 0)
-  }
-
-  ngOnInit() {
-    this.store.dispatch(new LoadUserThreadsAction())
   }
 
   public onThreadSelected(threadId: number) {
