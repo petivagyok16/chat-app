@@ -25,6 +25,7 @@ function handleThreadSelectedAction(uiState: UiState, action: ThreadSelectedActi
 function handleSelectUserAction(uiState: UiState, action: SelectUserAction) {
   return {
     ...uiState,
-    userId: action.payload
+    userId: action.payload,
+    currentThreadId: undefined,
   }
 }
