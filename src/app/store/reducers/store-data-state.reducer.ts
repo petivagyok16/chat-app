@@ -1,5 +1,5 @@
 import { Message } from '../../../../shared/model/message';
-import { ActionTypes, SendNewMessageAction, UserThreadsLoadedAction } from '../actions';
+import { ActionTypes, NewMessagesReceivedAction, SendNewMessageAction, UserThreadsLoadedAction } from '../actions';
 import { Action } from '@ngrx/store';
 import { StoreDataState } from '../states/store-data-state';
 import * as _ from 'lodash';
@@ -12,6 +12,9 @@ export function storeDataStateReducer(storeDataState: StoreDataState, action: Ac
 
     case ActionTypes.SEND_NEW_MESSAGE_ACTION:
       return handleSendNewMessageAction(storeDataState, <SendNewMessageAction>action);
+
+    case ActionTypes.NEW_MESSAGES_RECEIVED_ACTION:
+      return handleNewMessagesReceivedAction(storeDataState, <NewMessagesReceivedAction>action);
 
     default:
       return storeDataState;
@@ -37,13 +40,30 @@ function handleSendNewMessageAction(storeDataState: StoreDataState, action: Send
     participantId: action.payload.participantId,
     id: uuid()
   }
-  // this is bad, because it mutates the store
   currentThread.messageIds.push(newMessage.id);
-
   storeDataState.messages[newMessage.id] = newMessage;
 
   return {
     ...storeDataState,
 
   }
+}
+
+function handleNewMessagesReceivedAction(storeDataState: StoreDataState, action: NewMessagesReceivedAction): StoreDataState {
+  const newStoreDataState = _.cloneDeep(storeDataState);
+
+  const newMessages = action.payload.unreadMessages;
+  const currentThreadId =  action.payload.currentThreadId;
+  const currentUserId =  action.payload.currentUserId;
+
+  newMessages.forEach( message => {
+    newStoreDataState.messages[message.id] = message;
+    newStoreDataState.threads[message.threadId].messageIds.push(message.id);
+
+    if (message.threadId !== currentThreadId) {
+      newStoreDataState.threads[message.threadId].participants[currentUserId] += 1;
+    }
+  });
+
+  return newStoreDataState;
 }
