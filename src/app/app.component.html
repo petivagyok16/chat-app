@@ -1,10 +1,10 @@
 <header class="l-header v-center-parent">
   <img class="v-center" src="https://angular-academy.s3.amazonaws.com/main-logo/main-page-logo-small-hat.png">
+  <div class="topnav">
+    <a routerLink="/home">Home</a>
+    <a routerLink="/about">about</a>
+  </div>
 </header>
-<app-messages></app-messages>
-<div class="chatapp">
-  <app-user-selection></app-user-selection>
-  <app-thread-section></app-thread-section>
-  <app-message-section></app-message-section>
-</div>
+
+<router-outlet></router-outlet>
 
