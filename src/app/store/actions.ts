@@ -10,6 +10,9 @@ export const ActionTypes = {
   SEND_NEW_MESSAGE_ACTION: type("[Message] A new message was sent."),
   ERROR_OCCURED_ACTION: type('[Error] Error Occured'),
   CLEAR_ERROR_ACTION: type('[ERROR] Error closed'),
+  NEW_MESSAGES_RECEIVED_ACTION: type('NEW_MESSAGES_RECEIVED_ACTION'),
+  EFFECT_SUCCESS_NO_OP_ACTION: type('Effect success'),
+  
 };
 
 export class LoadUserThreadsAction implements Action {
@@ -38,6 +41,11 @@ export class SendNewMessageAction implements Action {
   constructor(public payload: { text: string, threadId: number, participantId: number }) {}
 }
 
+export class NewMessagesReceivedAction implements Action {
+  readonly type = ActionTypes.NEW_MESSAGES_RECEIVED_ACTION;
+  constructor(public payload: any) {}
+}
+
 export class ErrorOccuredAction implements Action {
   readonly type: string = ActionTypes.ERROR_OCCURED_ACTION;
   constructor(public payload: string) {}
@@ -46,4 +54,8 @@ export class ErrorOccuredAction implements Action {
 export class ClearErrorAction implements Action {
   readonly type: string = ActionTypes.CLEAR_ERROR_ACTION;
   constructor() {}
+}
+
+export class EffectSuccessNoOpAction implements Action {
+  readonly type = ActionTypes.EFFECT_SUCCESS_NO_OP_ACTION;
 }
